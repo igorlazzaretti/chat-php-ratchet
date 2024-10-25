@@ -4,20 +4,18 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitce559b9fbd0e097bccee77e6c3cc8be1
+class ComposerStaticInitec4c2cc5e52e92e794bf28aa137dce0e
 {
     public static $files = array (
         'ad155f8f1cf0d418fe49e248db8c661b' => __DIR__ . '/..' . '/react/promise/src/functions_include.php',
         '7b11c4dc42b3b3023073cb14e519683c' => __DIR__ . '/..' . '/ralouphie/getallheaders/src/getallheaders.php',
         '6e3fae29631ef280660b3cdad06f25a8' => __DIR__ . '/..' . '/symfony/deprecation-contracts/function.php',
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
-        '662a729f963d39afe703c9d9b7ab4a8c' => __DIR__ . '/..' . '/symfony/polyfill-php83/bootstrap.php',
     );
 
     public static $prefixLengthsPsr4 = array (
         'S' => 
         array (
-            'Symfony\\Polyfill\\Php83\\' => 23,
             'Symfony\\Polyfill\\Mbstring\\' => 26,
             'Symfony\\Component\\Routing\\' => 26,
             'Symfony\\Component\\HttpFoundation\\' => 33,
@@ -41,10 +39,6 @@ class ComposerStaticInitce559b9fbd0e097bccee77e6c3cc8be1
         array (
             'GuzzleHttp\\Psr7\\' => 16,
         ),
-        'E' => 
-        array (
-            'Evenement\\' => 10,
-        ),
         'A' => 
         array (
             'Api\\Websocket\\' => 14,
@@ -52,10 +46,6 @@ class ComposerStaticInitce559b9fbd0e097bccee77e6c3cc8be1
     );
 
     public static $prefixDirsPsr4 = array (
-        'Symfony\\Polyfill\\Php83\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/symfony/polyfill-php83',
-        ),
         'Symfony\\Polyfill\\Mbstring\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-mbstring',
@@ -109,37 +99,33 @@ class ComposerStaticInitce559b9fbd0e097bccee77e6c3cc8be1
         array (
             0 => __DIR__ . '/..' . '/guzzlehttp/psr7/src',
         ),
-        'Evenement\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/evenement/evenement/src',
-        ),
         'Api\\Websocket\\' => 
         array (
             0 => __DIR__ . '/../..' . '/src',
         ),
     );
 
+    public static $prefixesPsr0 = array (
+        'E' => 
+        array (
+            'Evenement' => 
+            array (
+                0 => __DIR__ . '/..' . '/evenement/evenement/src',
+            ),
+        ),
+    );
+
     public static $classMap = array (
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
-        'DateError' => __DIR__ . '/..' . '/symfony/polyfill-php83/Resources/stubs/DateError.php',
-        'DateException' => __DIR__ . '/..' . '/symfony/polyfill-php83/Resources/stubs/DateException.php',
-        'DateInvalidOperationException' => __DIR__ . '/..' . '/symfony/polyfill-php83/Resources/stubs/DateInvalidOperationException.php',
-        'DateInvalidTimeZoneException' => __DIR__ . '/..' . '/symfony/polyfill-php83/Resources/stubs/DateInvalidTimeZoneException.php',
-        'DateMalformedIntervalStringException' => __DIR__ . '/..' . '/symfony/polyfill-php83/Resources/stubs/DateMalformedIntervalStringException.php',
-        'DateMalformedPeriodStringException' => __DIR__ . '/..' . '/symfony/polyfill-php83/Resources/stubs/DateMalformedPeriodStringException.php',
-        'DateMalformedStringException' => __DIR__ . '/..' . '/symfony/polyfill-php83/Resources/stubs/DateMalformedStringException.php',
-        'DateObjectError' => __DIR__ . '/..' . '/symfony/polyfill-php83/Resources/stubs/DateObjectError.php',
-        'DateRangeError' => __DIR__ . '/..' . '/symfony/polyfill-php83/Resources/stubs/DateRangeError.php',
-        'Override' => __DIR__ . '/..' . '/symfony/polyfill-php83/Resources/stubs/Override.php',
-        'SQLite3Exception' => __DIR__ . '/..' . '/symfony/polyfill-php83/Resources/stubs/SQLite3Exception.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitce559b9fbd0e097bccee77e6c3cc8be1::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitce559b9fbd0e097bccee77e6c3cc8be1::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInitce559b9fbd0e097bccee77e6c3cc8be1::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitec4c2cc5e52e92e794bf28aa137dce0e::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitec4c2cc5e52e92e794bf28aa137dce0e::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInitec4c2cc5e52e92e794bf28aa137dce0e::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInitec4c2cc5e52e92e794bf28aa137dce0e::$classMap;
 
         }, null, ClassLoader::class);
     }

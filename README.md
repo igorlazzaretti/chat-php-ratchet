@@ -1,25 +1,20 @@
-Meu Passo-a-Passo:
+COMO RODAR O PROJETO BAIXADO
+Verificar se está instalado o Composer
+### composer
 
-Instalei o Ratchet na pasta /API
-# composer require cboden/ratchet
+Instalar todas as dependencias indicada pelo package.json
+### composer install
 
-Crio a pasta api/scr e nela crio o SistemaChat.php
-No composer.json acrescento:
+Rodar o projeto com PHP, para executar é necessário acessar o diretório api através do terminal ou prompt de comando
+### php servidor_chat.php
 
-    "autoload": {
-        "psr-4": {
-            "Api\\Websocket\\": "src/"
-        }
-    },
 
-E realizo o comando
-# composer dumpautoload
+SEQUENCIA PARA CRIAR O PROJETO
+Verificar se está instalado o Composer
+### composer
 
-Cria o Servidor em /api
--> servidor_chat.php
+Instalar a dependencias Ratchet, biblioteca PHP que permite criar aplicativos de tempo real baseados em WebSockets
+### composer require cboden/ratchet
 
-Roda o servidor:
-# php servidor_chat.php
-
-Não deve haver erros
-
+Rodar o projeto com PHP, para executar é necessário acessar o diretório api através do terminal ou prompt de comando
+### php servidor_chat.php

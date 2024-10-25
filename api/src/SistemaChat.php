@@ -4,52 +4,58 @@ namespace Api\Websocket;
 
 use Exception;
 use Ratchet\ConnectionInterface;
-use Ratchet\RFC6455\Messaging\MessageInterface;
 use Ratchet\WebSocket\MessageComponentInterface;
 
 class SistemaChat implements MessageComponentInterface
 {
     protected $cliente;
-    // Método Mágico
+
     public function __construct()
     {
-        $this->cliente = new \SplObjectStorage;
+        // Iniciar o objetos que deve armazenar os clientes conectados
+        $this->cliente = new \SplObjectStorage();
     }
-    // onOpen
-    // Abre conexão para um novo cliente
+
+    // Abrir conexão para o novo cliente
     public function onOpen(ConnectionInterface $conn)
-    {   // Adiciona cliente na lista
+    {
+        // Adicionar o cliente na lista
         $this->cliente->attach($conn);
-        echo "Nova conexão: {$conn->resourceId}\n\n";
+
+        //echo "Nova conexão: {$conn->resourceId}. \n\n";
     }
-    // onMessage
-    //
+
+    // Enviar mensagens para os usuário conectados
     public function onMessage(ConnectionInterface $from, $msg)
     {
-        // Percorre a lista de usuários conectados
-        foreach($this->cliente as $cliente){
+        // Percorrer a lista de usuários conectados
+        foreach($this->cliente as $cliente) {
 
-            if($from !== $cliente){
-            // Envia mensagens para Usuários
+            // Não enviar a mensagem para o usuário que enviou a mensagem
+            if($from !== $cliente) {
+                // Enviar as mensagems para os usuários
                 $cliente->send($msg);
             }
         }
-        echo "Usuário {$from->resourceId} enviou uma mensagem \n\n";
-    }
-    //onClose
-    // Fecha conexão com o cliente
-    public function onClose(ConnectionInterface $conn)
-    {
-        $this->cliente->detach($conn);
-        echo "Usuário {$conn->resourceId} desconectou. \n\n";
-    }
-    //onError
-    // Em caso de erro do Websocket
-    public function onError(ConnectionInterface $conn, Exception $e)
-    {
-        // Fecha conexão com o cliente
-        $conn->close();
-        echo "Ocorreu um erro: {$e->getMessage()} \n\n";
+
+        //echo "Usuário {$from->resourceId} enviou uma mensagem. \n\n";
     }
 
+    // Desconectar o cliente do websocket
+    public function onClose(ConnectionInterface $conn)
+    {
+        // Fechar a conexão e retirar o cliente da lista
+        $this->cliente->detach($conn);
+
+        //echo "Usuário {$conn->resourceId} desconectou. \n\n";
+    }
+
+    // Função que será chamada caso ocorra algum erro no websocket
+    public function onError(ConnectionInterface $conn, Exception $e)
+    {
+        // Fechar conexão do cliente
+        $conn->close();
+
+        //echo "Ocorreu um erro: {$e->getMessage()} \n\n";
+    }
 }

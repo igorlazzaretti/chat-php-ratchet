@@ -1,53 +1,79 @@
+<?php
+
+session_start(); // Iniciar a sessão
+
+ob_start(); // Limpar o buffer de saida para evitar erro de redirecionamento
+?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chat com Ratchet</title>
+    <title>Celke - WebSocket</title>
 </head>
+
 <body>
     <h2>Chat</h2>
 
-    <!--  -->
-    <label>Nova Mensagem</label>
-    <input type="text" name="mensagem" id="mensagem" placeholder="Digite aqui">
-    <br>
-    <br>
+    <!-- Imprimir o nome do usuário que está na sessão -->
+    <p>Bem-vindo: <span id="nome-usuario"><?php echo $_SESSION['usuario']; ?></span></p>
 
-    <input type="submit" onclick="enviar()" value="Enviar">
-    <br>
-    <br>
+    <!-- Campo para o usuário digitar a nova mensagem -->
+    <label>Nova mensagem: </label>
+    <input type="text" name="mensagem" id="mensagem" placeholder="Digite a mensagem..."><br><br>
 
+    <input type="button" onclick="enviar()" value="Enviar"><br><br>
 
-    <!-- Seletor para receber as mensagens enviadas pelo Chat -->
+    <!-- Receber as mensagem do chat enviado pelo JavaScript-->
     <span id="mensagem-chat"></span>
 
     <script>
+        // Recuperar o id que deve receber as mensagem do chat
+        const mensagemChat = document.getElementById('mensagem-chat');
 
-        const mensagemChat = document.getElementById("mensagem-chat");
+        // Endereço do websocket
+        const ws = new WebSocket('ws://localhost:8080');
 
-        const ws = new Websocket('ws://localhost:8088');
-
+        // Realizar a conexão com websocket
         ws.onopen = (e) => {
-            console.log('Conectado!');
+            //console.log('Conectado!');
         }
 
+        // Receber a mensagem do WebSocket
         ws.onmessage = (mensagemRecebida) => {
-            let resultado = JSON.parse(mensagemRecebida.data)
+
+            // Ler as mensagem enviada pelo WebSocket
+            let resultado = JSON.parse(mensagemRecebida.data);
+
+            // Enviar a mensagem para o HTML, inserir no final da lista de mensagens
+            mensagemChat.insertAdjacentHTML('beforeend', `${resultado.mensagem} <br>`);
         }
 
-        mensagemChat.insertAdjacentElement('beforeend', '${resultado.mensagem}')
+        // Função para enviar a mensagem
+        const enviar = () =>{
 
-        const enviar = () => {
+            // Recuperar o id do campo mensagem
             let mensagem = document.getElementById("mensagem");
 
-            let dados = {
-                mensagem: mensagem.value
-            }
-        ws.send(JSON.stringify(dados));
+            var nomeUsuario = document.getElementById('nome-usuario').textContent;
 
-        mensagem.value = '';
+            // Criar o array de dados para enviar para websocket
+            let dados = {
+                mensagem: `${nomeUsuario}: ${mensagem.value}`
+            }
+
+            // Enviar a mensagem para websocket
+            ws.send(JSON.stringify(dados));
+
+            // Enviar a mensagem para o HTML, inserir no final da lista de mensagens
+            mensagemChat.insertAdjacentHTML('beforeend', `${nomeUsuario}: ${mensagem.value} <br>`);
+
+            // Limpar o campo mensagem
+            mensagem.value = '';
         }
     </script>
+
 </body>
 </html>
